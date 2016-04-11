@@ -1,7 +1,6 @@
 import java.util.Random;
-import java.util.Iterator;
 
-public class Sudoku implements Iterable<Tuple> {
+public class Sudoku {
 
     /****************************************************
      * BELOW are the parts of code that YOU SHOULD READ *
@@ -53,18 +52,6 @@ public class Sudoku implements Iterable<Tuple> {
     /* Return a DEEP COPY of the current Sudoku instance */
     public Sudoku deepcopy() {
         return new Sudoku(grid);
-    }
-
-    /* Return the an iterator over all the possible position tuples
-     * Use it this way:
-     *     for (Tuple t : sudokuInstance) {
-     *         int val = instance.get(t);
-     *         ...
-     *     }
-     */
-    @Override
-    public Iterator<Tuple> iterator() {
-        return new SudokuIterator();
     }
 
     /****************************************************
