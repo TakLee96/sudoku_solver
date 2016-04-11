@@ -1,6 +1,8 @@
+/* YOU NEED TO IMPLEMENT ONE METHOD IN THIS FILE */
+
 public class Solver {
 
-    private static final int NUM_TRIALS = 25;
+    private static final int NUM_TRIALS = 10;
 
     /* Solves the Sudoku instance IN-PLACE */
     public static void solve(Sudoku instance) {
@@ -16,8 +18,8 @@ public class Solver {
             long start = System.currentTimeMillis();
             solve(instance);
             long end = System.currentTimeMillis();
-            clear();
             if (instance.checkAllConstraints() && instance.complete()) {
+                System.out.println("Puzzle #" + i + " complete in " + (end-start) + "ms");
                 time += end - start;
             } else {
                 System.out.println(copy);

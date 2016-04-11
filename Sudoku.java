@@ -1,3 +1,5 @@
+/* YOU SHOULD READ THIS FILE */
+
 import java.util.Random;
 
 public class Sudoku {
@@ -65,6 +67,8 @@ public class Sudoku {
 
 
     /* YOU DON'T NEED to know about these methods BELOW */
+    private static final int[][] sudo = Sudo.get(new Random(5));
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -85,7 +89,7 @@ public class Sudoku {
     private int[][] grid;
     public Sudoku(int seed) {
         Random random = new Random(seed);
-        grid = Sudo.get(random);
+        grid = sudo;
         if (!this.checkAllConstraints())
             throw new RuntimeException("The online code F*CKING breaks");
         for (int r = 1; r <= 9; r++)

@@ -1,3 +1,5 @@
+/* YOU SHOULD READ THIS FILE */
+
 public class Tuple {
     private int r, c;
     public Tuple(int r, int c) {
