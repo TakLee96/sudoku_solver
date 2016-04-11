@@ -10,8 +10,11 @@ public class Sudoku implements Iterable<Tuple> {
     /* IMPORTANT: r is row and c is col, both range from 1 to 9; the
      * value for a cell is ranged from 0 to 9, where 0 indicates empty */
     public int get(int r, int c) { return this.grid[r-1][c-1]; }
+    public int get(Tuple t) { return this.get(t.row(), t.col()); }
     public void set(int r, int c, int val) { this.grid[r-1][c-1] = val; }
+    public void set(Tuple t, int val) { this.set(t.row(), t.col(), val); }
     public boolean empty(int r, int c) { return this.get(r, c) == 0; }
+    public boolean empty(Tuple t) { return this.empty(t.row(), t.col()); }
 
     /* Return true if none of the cells is 0/empty */
     public boolean complete() {
@@ -43,6 +46,9 @@ public class Sudoku implements Iterable<Tuple> {
     public boolean checkConstraints(int r, int c) {
         return (this.checkRow(r) && this.checkColumn(c) && this.checkBlock(r, c));
     }
+    public boolean checkConstraints(Tuple t) {
+        return this.checkConstraints(t.row(), t.col());
+    }
 
     /* Return a DEEP COPY of the current Sudoku instance */
     public Sudoku deepcopy() {
@@ -52,8 +58,7 @@ public class Sudoku implements Iterable<Tuple> {
     /* Return the an iterator over all the possible position tuples
      * Use it this way:
      *     for (Tuple t : sudokuInstance) {
-     *         int r = t.row(); int c = t.col();
-     *         int val = instance.get(r, c);
+     *         int val = instance.get(t);
      *         ...
      *     }
      */
@@ -73,21 +78,6 @@ public class Sudoku implements Iterable<Tuple> {
 
 
     /* YOU DON'T NEED to know about these methods BELOW */
-    private static class SudokuIterator implements Iterator<Tuple> {
-        private int count = 0;
-        @Override
-        public boolean hasNext() {
-            return count < 81;
-        }
-        @Override
-        public Tuple next() {
-            int col = count % 9 + 1;
-            int row = count / 9 + 1;
-            count = count + 1;
-            return new Tuple(row, col);
-        }
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -14,7 +14,10 @@ public class Solver {
         if (instance.checkAllConstraints() && instance.complete()) {
             System.out.println("Solved successfully in " + (end-start) + " ms");
             System.out.println(instance);
-        } else throw new RuntimeException("Failed to solve the Sudoku!");
+        } else {
+            System.out.println(instance);
+            throw new RuntimeException("Failed to solve the Sudoku!");
+        }
     }
 
 }
