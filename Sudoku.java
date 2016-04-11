@@ -85,14 +85,13 @@ public class Sudoku {
     private int[][] grid;
     public Sudoku(int seed) {
         Random random = new Random(seed);
-        this.grid = new int[9][9];
+        grid = Sudo.get(random);
+        if (!this.checkAllConstraints())
+            throw new RuntimeException("The online code F*CKING breaks");
         for (int r = 1; r <= 9; r++)
             for (int c = 1; c <= 9; c++)
-                if (random.nextDouble() < fillingRatio)
-                    do this.set(r, c, random.nextInt(9) + 1);
-                    while (!this.checkConstraints(r, c));
-        if (!checkAllConstraints())
-            throw new RuntimeException("unbelievable error");
+                if (random.nextDouble() > fillingRatio)
+                    this.set(r, c, 0);
     }
 
     private Sudoku(int[][] grid) {

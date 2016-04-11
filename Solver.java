@@ -1,6 +1,6 @@
 public class Solver {
 
-    private static final int NUM_TRIALS = 100;
+    private static final int NUM_TRIALS = 25;
 
     /* Solves the Sudoku instance IN-PLACE */
     public static void solve(Sudoku instance) {
@@ -16,6 +16,7 @@ public class Solver {
             long start = System.currentTimeMillis();
             solve(instance);
             long end = System.currentTimeMillis();
+            clear();
             if (instance.checkAllConstraints() && instance.complete()) {
                 time += end - start;
             } else {
@@ -25,6 +26,7 @@ public class Solver {
                 throw new RuntimeException("Failed to solve Sudoku #" + i);
             }
         }
+        System.out.println("Solved " + NUM_TRIALS + " puzzles in " + time + "ms");
     }
 
 }
