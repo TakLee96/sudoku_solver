@@ -4,7 +4,6 @@ public class Solver {
     /* Solves the Sudoku instance IN-PLACE */
     public static void solve(Sudoku instance) {
         /* TODO: YOUR CODE HERE */
-
     }
 
     public static void main(String[] args) {

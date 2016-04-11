@@ -1,3 +1,6 @@
+/* YOU DON'T NEED TO READ THIS FILE
+ * BUT YOU CAN MODIFY CONSANTS TO PLAY AROUND */
+
 import java.util.Random;
 
 public class Constant {
