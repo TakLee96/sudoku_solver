@@ -21,7 +21,7 @@ public class Sudoku {
     public boolean complete() {
         for (int r = 1; r <= 9; r++)
             for (int c = 1; c <= 9; c++)
-                if (this.get(r, c) == 0)
+                if (this.empty(r, c))
                     return false;
         return true;
     }
@@ -67,7 +67,7 @@ public class Sudoku {
 
 
     /* YOU DON'T NEED to know about these methods BELOW */
-    private static final int[][] sudo = Sudo.get(new Random(5));
+    private static int[][] sudo = Generator.get(new Random(5));
 
     @Override
     public String toString() {
@@ -84,17 +84,22 @@ public class Sudoku {
         return sb.toString();
     }
 
-    private static final double fillingRatio = 0.22;
+    private static int generated = 0;
+    private static void pre() {
+        generated++;
+        if (generated % Constant.REGEN_FREQ == 0)
+            sudo = Generator.get(Constant.RANDOM);
+    }
 
     private int[][] grid;
-    public Sudoku(int seed) {
-        Random random = new Random(seed);
+    public Sudoku() {
+        pre();
         grid = sudo;
         if (!this.checkAllConstraints())
             throw new RuntimeException("The online code F*CKING breaks");
         for (int r = 1; r <= 9; r++)
             for (int c = 1; c <= 9; c++)
-                if (random.nextDouble() > fillingRatio)
+                if (Constant.RANDOM.nextDouble() > Constant.FILLING_RATIO)
                     this.set(r, c, 0);
     }
 

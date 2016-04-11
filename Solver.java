@@ -1,8 +1,5 @@
 /* YOU NEED TO IMPLEMENT ONE METHOD IN THIS FILE */
-
 public class Solver {
-
-    private static final int NUM_TRIALS = 10;
 
     /* Solves the Sudoku instance IN-PLACE */
     public static void solve(Sudoku instance) {
@@ -12,14 +9,18 @@ public class Solver {
 
     public static void main(String[] args) {
         long time = 0;
-        for (int i = 0; i < NUM_TRIALS; i++) {
-            Sudoku instance = new Sudoku(i);
+        for (int i = 1; i <= Constant.NUM_TRIALS; i++) {
+            Sudoku instance = new Sudoku();
             Sudoku copy = instance.deepcopy();
             long start = System.currentTimeMillis();
             solve(instance);
             long end = System.currentTimeMillis();
             if (instance.checkAllConstraints() && instance.complete()) {
                 System.out.println("Puzzle #" + i + " complete in " + (end-start) + "ms");
+                if (end - start > 300) {
+                    System.out.println("This takes quite long: ");
+                    System.out.println(copy);
+                }
                 time += end - start;
             } else {
                 System.out.println(copy);
@@ -28,7 +29,7 @@ public class Solver {
                 throw new RuntimeException("Failed to solve Sudoku #" + i);
             }
         }
-        System.out.println("Solved " + NUM_TRIALS + " puzzles in " + time + "ms");
+        System.out.println("Solved " + Constant.NUM_TRIALS + " puzzles in " + time + "ms");
     }
 
 }
