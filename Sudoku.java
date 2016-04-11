@@ -91,6 +91,8 @@ public class Sudoku {
                 if (random.nextDouble() < fillingRatio)
                     do this.set(r, c, random.nextInt(9) + 1);
                     while (!this.checkConstraints(r, c));
+        if (!checkAllConstraints())
+            throw new RuntimeException("unbelievable error");
     }
 
     private Sudoku(int[][] grid) {

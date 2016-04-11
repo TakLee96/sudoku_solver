@@ -1,22 +1,29 @@
 public class Solver {
 
+    private static final int NUM_TRIALS = 100;
+
     /* Solves the Sudoku instance IN-PLACE */
     public static void solve(Sudoku instance) {
         /* TODO: YOUR CODE HERE */
+
     }
 
     public static void main(String[] args) {
-        Sudoku instance = new Sudoku(0);
-        System.out.println(instance);
-        long start = System.currentTimeMillis();
-        solve(instance);
-        long end = System.currentTimeMillis();
-        if (instance.checkAllConstraints() && instance.complete()) {
-            System.out.println("Solved successfully in " + (end-start) + " ms");
-            System.out.println(instance);
-        } else {
-            System.out.println(instance);
-            throw new RuntimeException("Failed to solve the Sudoku!");
+        long time = 0;
+        for (int i = 0; i < NUM_TRIALS; i++) {
+            Sudoku instance = new Sudoku(i);
+            Sudoku copy = instance.deepcopy();
+            long start = System.currentTimeMillis();
+            solve(instance);
+            long end = System.currentTimeMillis();
+            if (instance.checkAllConstraints() && instance.complete()) {
+                time += end - start;
+            } else {
+                System.out.println(copy);
+                System.out.println("BECOMES");
+                System.out.println(instance);
+                throw new RuntimeException("Failed to solve Sudoku #" + i);
+            }
         }
     }
 
