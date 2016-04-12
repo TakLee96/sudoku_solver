@@ -123,7 +123,7 @@ public class Sudoku {
                     this.set(r, c, 0);
     }
 
-    private Sudoku(int[][] grid) {
+    public Sudoku(int[][] grid) {
         this.grid = new int[9][9];
         for (int i = 0; i < 9; i++)
             for (int j = 0; j < 9; j++)
