@@ -66,29 +66,49 @@ public class Sudoku {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /* YOU DON'T NEED to know about these methods BELOW */
-    private static int[][] sudo = Generator.get(new Random(5));
+    private static int[][] sudo;
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int r = 1; r <= 9; r++) {
-            sb.append("| ");
+            sb.append("{ ");
             for (int c = 1; c < 9; c++) {
                 sb.append(this.get(r, c));
                 sb.append(", ");
             }
             sb.append(this.get(r, 9));
-            sb.append(" |\n");
+            sb.append(" },\n");
         }
         return sb.toString();
     }
 
     private static int generated = 0;
     private static void pre() {
-        generated++;
         if (generated % Constant.REGEN_FREQ == 0)
             sudo = Generator.get(Constant.RANDOM);
+        generated++;
     }
 
     private int[][] grid;
