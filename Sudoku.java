@@ -130,6 +130,19 @@ public class Sudoku {
                 this.grid[i][j] = grid[i][j];
     }
 
+    public Sudoku(String board) {
+        this.grid = new int[9][9];
+        int row, col, val; char cell;
+        for (int i = 0; i < board.length(); i++) {
+            cell = board.charAt(i);
+            row = i % 9 + 1;
+            col = i / 9 + 1;
+            if (cell == '.') val = 0;
+            else val = cell - '0';
+            set(row, col, val);
+        }
+    }
+
     private boolean checkRow(int r) {
         boolean[] exist = new boolean[9];
         for (int c = 1; c <= 9; c++) {
