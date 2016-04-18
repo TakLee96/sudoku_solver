@@ -10,9 +10,9 @@ public class SolverTester {
         for (int i = 1; i <= Constant.NUM_TRIALS; i++) {
             Sudoku instance = new Sudoku();
             Sudoku copy = instance.deepcopy();
-            Solver s = new Solver(instance);
+            AmazingSolver s = new AmazingSolver(instance);
             long elapsed = s.start();
-            if (instance.checkAllConstraints() && instance.complete()) {
+            if (instance.checkAllConstraints() && instance.complete() && instance.equals(copy)) {
                 time += elapsed;
                 if (i % portion == 0)
                     System.out.println((i / portion) +

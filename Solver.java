@@ -1,4 +1,5 @@
 /* YOU NEED TO IMPLEMENT ONE METHOD IN THIS FILE */
+import java.util.LinkedList;
 
 public class Solver implements Runnable {
 
@@ -9,12 +10,32 @@ public class Solver implements Runnable {
     /* Make sure to CHECK THIS VARIABLE OFTEN to make sure
      * that you terminate your solve method whenever this
      * boolean variable becomes true */
-    private boolean timedOut;
+    protected boolean timedOut;
 
     /* Solves the Sudoku instance IN-PLACE */
     public void solve(Sudoku instance) {
         /* TODO: YOUR CODE HERE */
-        
+        try {
+            Tracker tr = new Tracker(instance);
+            if (tr.dead()) return;
+            backtrack(tr, tr.mrv());
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean backtrack(Tracker tr, Tuple t) {
+        if (timedOut) throw new RuntimeException("timed out");
+        if (t == null) return !tr.dead();
+        Object[] domain = tr.domain(t).toArray();
+        for (int i = 0; i < domain.length; i++) {
+            Integer v = (Integer) domain[i];
+            tr.put(t, v);
+            if (backtrack(tr, tr.mrv()))
+                return true;
+            tr.rewind(t);
+        }
+        return false;
     }
 
     /* Run SolverTester to begin a sequence of tests
@@ -23,24 +44,23 @@ public class Solver implements Runnable {
      * You can also modify Constant.java */
     public static void main(String[] args) {
         Sudoku instance = new Sudoku(new int[][]{
-            { 0, 0, 0, 0, 5, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 7 },
-            { 0, 0, 0, 1, 0, 3, 2, 4, 5 },
-            { 0, 0, 3, 0, 0, 0, 0, 0, 8 },
-            { 0, 8, 0, 3, 0, 0, 0, 9, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+            { 4, 0, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 0, 2, 0, 0, 4, 0 },
+            { 0, 0, 0, 0, 0, 7, 0, 0, 0 },
+            { 0, 8, 0, 0, 0, 0, 5, 0, 9 },
+            { 0, 7, 0, 0, 0, 0, 4, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 3, 0, 0, 0, 0, 6, 0, 0, 0 },
-            { 0, 0, 2, 0, 1, 0, 0, 0, 0 }
+            { 0, 0, 7, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 7, 0, 0, 9, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0 }
         });
         Solver s = new Solver(instance);
         System.out.println(instance);
-        long now = System.currentTimeMillis();
-        s.run();
+        long time = s.start();
         if (instance.complete() && instance.checkAllConstraints()) {
-            System.out.println("Solved in " + (System.currentTimeMillis() - now) + "ms:");
+            System.out.println("Solved in " + time + "ms:");
         } else {
-            System.out.println("Failed to solve the instance...");
+            System.out.println("Failed to solve the instance... [" + time + "ms]");
         }
         System.out.println(instance);
     }
@@ -70,6 +90,10 @@ public class Solver implements Runnable {
     public Solver(Sudoku instance) {
         this.instance = instance;
         this.blinker = new Thread(this);
+        this.timedOut = false;
+    }
+    public Solver(Sudoku instance, boolean notMaster) {
+        this.instance = instance;
         this.timedOut = false;
     }
 

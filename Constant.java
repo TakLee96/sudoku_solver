@@ -5,10 +5,10 @@ import java.util.Random;
 
 public class Constant {
     public static final double FILLING_RATIO = 0.22;
-    public static final int REGEN_FREQ = 11;
-    public static final int NUM_TRIALS = 500;
+    public static final int REGEN_FREQ = 53;
+    public static final int NUM_TRIALS = 1000;
     public static final int MAX_SOLVE_TIME = 60000;
-    public static final long SEED = 55;
+    public static final long SEED = 50;
 
     public static final Random RANDOM = new Random(SEED);
 }

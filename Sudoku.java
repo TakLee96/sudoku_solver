@@ -1,6 +1,8 @@
 /* YOU SHOULD READ THIS FILE */
 
 import java.util.Random;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Sudoku {
 
@@ -14,6 +16,7 @@ public class Sudoku {
     public int get(Tuple t) { return this.get(t.row(), t.col()); }
     public void set(int r, int c, int val) { this.grid[r-1][c-1] = val; }
     public void set(Tuple t, int val) { this.set(t.row(), t.col(), val); }
+    public void set(Triple t) { this.set(t.row(), t.col(), t.val()); }
     public boolean empty(int r, int c) { return this.get(r, c) == 0; }
     public boolean empty(Tuple t) { return this.empty(t.row(), t.col()); }
 
@@ -54,6 +57,28 @@ public class Sudoku {
     /* Return a DEEP COPY of the current Sudoku instance */
     public Sudoku deepcopy() {
         return new Sudoku(grid);
+    }
+
+    public LinkedList<Tuple> unfilledEntries() {
+        LinkedList<Tuple> retval = new LinkedList<Tuple>();
+        for (int r = 1; r <= 9; r++)
+            for (int c = 1; c <= 9; c++)
+                if (empty(r, c))
+                    retval.add(new Tuple(r, c));
+        return retval;
+    }
+
+    public LinkedList<Triple> filledEntries() {
+        LinkedList<Triple> retval = new LinkedList<Triple>();
+        for (int r = 1; r <= 9; r++)
+            for (int c = 1; c <= 9; c++)
+                if (!empty(r, c))
+                    retval.add(new Triple(r, c, get(r, c)));
+        return retval;
+    }
+
+    public void put(Sudoku other) {
+        this.grid = other.grid;
     }
 
     /****************************************************
@@ -102,6 +127,17 @@ public class Sudoku {
             sb.append(" },\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) return false;
+        Sudoku o = (Sudoku) other;
+        for (int r = 1; r <= 9; r++)
+            for (int c = 1; c <= 9; c++)
+                if (!empty(r, c) && !o.empty(r, c) && get(r, c) != o.get(r, c))
+                    return false;
+        return true;
     }
 
     private static int generated = 0;

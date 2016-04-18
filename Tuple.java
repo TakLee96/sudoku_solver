@@ -5,6 +5,9 @@ public class Tuple {
     public Tuple(int r, int c) {
         this.r = r; this.c = c;
     }
+    public Tuple(Tuple t) {
+        this.r = t.row(); this.c = t.col();
+    }
 
     public int row() { return r; }
     public int col() { return c; }
